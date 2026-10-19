@@ -30,6 +30,29 @@ describe('fitGrid on a synthetic stud grid', () => {
     });
   }
 
+  it('counts from stud evidence, not the quad: a 15% shrunken quad still gives 16x16', () => {
+    const { img, corners } = renderMosaic({ cols: 16, rows: 16, pitch: 40, pieces: demoLayout(16, 16), seed: 5 });
+    const cx = img.width / 2, cy = img.height / 2;
+    const quad = corners.map(([x, y]) => [cx + (x - cx) * 0.85, cy + (y - cy) * 0.85]) as Quad;
+    const fit = fitGrid(img, quad);
+    expect(fit.ok).toBe(true);
+    expect([fit.grid.cols, fit.grid.rows]).toEqual([16, 16]);
+  });
+
+  it('close-up framing: mosaic cut by the photo edge keeps only rows whose studs are in the photo', () => {
+    const P = 40;
+    const { img, corners } = renderMosaic({ cols: 16, rows: 16, pitch: P, pieces: demoLayout(16, 16), margin: 80, seed: 9 });
+    // crop the photo through the middle of row 0 and row 15 (more than half of each hidden)
+    const top = Math.round(corners[0][1] + P * 0.7), bottom = Math.round(corners[3][1] - P * 0.7);
+    const h = bottom - top;
+    const data = img.data.slice(top * img.width * 4, bottom * img.width * 4);
+    const cropped = { width: img.width, height: h, data };
+    const quad: Quad = [[corners[0][0], 0], [corners[1][0], 0], [corners[2][0], h - 1], [corners[3][0], h - 1]];
+    const fit = fitGrid(cropped, quad);
+    expect(fit.grid.cols).toBe(16);
+    expect(fit.grid.rows).toBe(14);
+  });
+
   it('honours gridOverride', () => {
     const { img, corners } = renderMosaic({ cols: 10, rows: 10, pitch: 40, pieces: demoLayout(10, 10) });
     const fit = fitGrid(img, corners as Quad, { gridOverride: { cols: 10, rows: 10 } });

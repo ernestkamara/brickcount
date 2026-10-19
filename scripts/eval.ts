@@ -9,7 +9,7 @@
 // Missing labels -> prediction only. --annotate writes eval-out/<stem>.png (rectified image,
 // green = correct piece, red = wrong predicted piece, blue dashed = missed true piece).
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { basename, extname, join } from 'node:path';
+import { basename, extname, join, resolve } from 'node:path';
 import sharp from 'sharp';
 import { loadOpenCv } from '../src/pipeline/cv';
 import { runPipelineDetailed } from '../src/pipeline/run';
@@ -229,7 +229,7 @@ async function main() {
     meanMs: mean(reports.map((r) => r.ms)),
   };
   console.log('\nSummary:', JSON.stringify(summary, (_, v) => (typeof v === 'number' ? +v.toFixed(3) : v), 2));
-  writeFileSync(join(root, outPath), JSON.stringify({ summary, photos: reports }, null, 2));
+  writeFileSync(resolve(root, outPath), JSON.stringify({ summary, photos: reports }, null, 2));
   console.log(`wrote ${outPath}`);
 }
 

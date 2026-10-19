@@ -90,15 +90,18 @@ export function detectQuad(cv: CV, img: RgbaImage, maxSide = DEFAULT_DETECT_SIDE
       const r = cv.boundingRect(c);
       const area = cv.contourArea(c);
       c.delete();
-      const touches = r.x <= border || r.y <= border || r.x + r.width >= W - border || r.y + r.height >= H - border;
-      if (touches) continue;
+      // Close-up framings crop the mosaic at the photo edge, so border contact is allowed,
+      // but background/frame regions touch 3+ sides (or two adjacent ones) and are rejected.
+      const tL = r.x <= border, tT = r.y <= border, tR = r.x + r.width >= W - border, tB = r.y + r.height >= H - border;
+      const nTouch = +tL + +tT + +tR + +tB;
+      if (nTouch >= 3 || (tL && tT) || (tT && tR) || (tR && tB) || (tB && tL)) continue;
       const aspect = Math.min(r.width, r.height) / Math.max(r.width, r.height);
       if (aspect < 0.4) continue;
       const fill = area / (r.width * r.height);
       if (fill < 0.5) continue;
       const cx = r.x + r.width / 2, cy = r.y + r.height / 2;
       const dc = Math.hypot((cx - W / 2) / W, (cy - H / 2) / H);
-      const score = area * (1 - Math.min(0.8, dc)) * fill;
+      const score = area * (1 - Math.min(0.8, dc)) * fill * Math.pow(0.85, nTouch);
       if (score > bestScore) { bestScore = score; best = i; }
     }
     if (best < 0 || bestScore < W * H * 0.01) {
@@ -122,6 +125,9 @@ export function detectQuad(cv: CV, img: RgbaImage, maxSide = DEFAULT_DETECT_SIDE
       approx.delete();
     }
     let method = 'contour';
+    // A photographed square stays near-rectangular (small keystone); a polygon with a corner
+    // far from 90° means the hull lost a corner (e.g. white border pieces) -> use minAreaRect.
+    if (pts && maxCornerDeviation(orderCorners(pts)) > 10) pts = null;
     if (!pts) {
       const rr = cv.minAreaRect(hull);
       const verts = cv.RotatedRect.points(rr) as { x: number; y: number }[];
@@ -137,6 +143,18 @@ export function detectQuad(cv: CV, img: RgbaImage, maxSide = DEFAULT_DETECT_SIDE
   } finally {
     for (const m of mats) m.delete();
   }
+}
+
+/** Largest |angle - 90°| over the corners of an ordered quad, degrees. */
+export function maxCornerDeviation(q: Point[]): number {
+  let worst = 0;
+  for (let i = 0; i < 4; i++) {
+    const p = q[i], a = q[(i + 3) % 4], b = q[(i + 1) % 4];
+    const v1 = [a[0] - p[0], a[1] - p[1]], v2 = [b[0] - p[0], b[1] - p[1]];
+    const cos = (v1[0] * v2[0] + v1[1] * v2[1]) / (Math.hypot(v1[0], v1[1]) * Math.hypot(v2[0], v2[1]) || 1);
+    worst = Math.max(worst, Math.abs((Math.acos(Math.max(-1, Math.min(1, cos))) * 180) / Math.PI - 90));
+  }
+  return worst;
 }
 
 export function quadArea(p: Point[]): number {

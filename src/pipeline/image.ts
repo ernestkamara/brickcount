@@ -146,6 +146,8 @@ export function warpQuad(
         const w = h6 * xx + h7 * yy + h8;
         let fx = (h0 * xx + h1 * yy + h2) / w - 0.5;
         let fy = (h3 * xx + h4 * yy + h5) / w - 0.5;
+        // alpha 0 marks samples outside the photo (clamped colour), so callers can ignore them
+        const inside = fx >= -1 && fy >= -1 && fx <= sw && fy <= sh;
         if (fx < 0) fx = 0; else if (fx > sw - 1.001) fx = sw - 1.001;
         if (fy < 0) fy = 0; else if (fy > sh - 1.001) fy = sh - 1.001;
         const ix = fx | 0, iy = fy | 0;
@@ -157,7 +159,7 @@ export function warpQuad(
         od[o] = sd[k] * w00 + sd[k + 4] * w10 + sd[k2] * w01 + sd[k2 + 4] * w11;
         od[o + 1] = sd[k + 1] * w00 + sd[k + 5] * w10 + sd[k2 + 1] * w01 + sd[k2 + 5] * w11;
         od[o + 2] = sd[k + 2] * w00 + sd[k + 6] * w10 + sd[k2 + 2] * w01 + sd[k2 + 6] * w11;
-        od[o + 3] = 255;
+        od[o + 3] = inside ? 255 : 0;
       }
     }
     return { img: out, toSrc };
