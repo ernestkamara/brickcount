@@ -71,8 +71,16 @@ export async function runPipelineDetailed(
     progress('quad', 0);
     let quad: Quad;
     if (opts.corners) {
+      // The quad only seeds the grid fit (cells are counted from stud evidence). User corners
+      // are often loose (dragged to the photo corners on a tight crop), so when detection
+      // finds a mosaic that agrees with them, seed from the tighter detected quad instead.
       quad = opts.corners;
       debug.quadMethod = 'override';
+      const q = detectQuad(cv as CV, img, opts.maxSide ?? DEFAULT_DETECT_SIDE);
+      if (q.method !== 'fallback' && quadsAgree(opts.corners, q.quad)) {
+        quad = q.quad;
+        debug.quadMethod = 'override+detected';
+      }
     } else {
       const q = detectQuad(cv as CV, img, opts.maxSide ?? DEFAULT_DETECT_SIDE);
       quad = q.quad;
@@ -192,4 +200,19 @@ function dropBaseplate(g: GroupResult, cells: StudCell[], grid: GridSize): Group
     studCount: keep.reduce((s, p) => s + p.w * p.h, 0),
     lowConfidenceCount: keep.filter((p) => p.confidence < LOW_CONFIDENCE).length,
   };
+}
+
+/** Detected quad is a refinement of the user's: centre inside it and bounding boxes overlap well. */
+export function quadsAgree(user: Quad, detected: Quad): boolean {
+  const box = (q: Quad) => {
+    const xs = q.map((p) => p[0]), ys = q.map((p) => p[1]);
+    return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)];
+  };
+  const [ax0, ay0, ax1, ay1] = box(user), [bx0, by0, bx1, by1] = box(detected);
+  const cx = detected.reduce((s, p) => s + p[0], 0) / 4, cy = detected.reduce((s, p) => s + p[1], 0) / 4;
+  if (cx < ax0 || cx > ax1 || cy < ay0 || cy > ay1) return false;
+  const iw = Math.max(0, Math.min(ax1, bx1) - Math.max(ax0, bx0)), ih = Math.max(0, Math.min(ay1, by1) - Math.max(ay0, by0));
+  const inter = iw * ih;
+  const union = (ax1 - ax0) * (ay1 - ay0) + (bx1 - bx0) * (by1 - by0) - inter;
+  return union > 0 && inter / union > 0.6;
 }
