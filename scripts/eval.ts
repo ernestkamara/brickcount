@@ -2,6 +2,7 @@
 //
 //   npx tsx scripts/eval.ts [--set real|closeup|synthetic] [--classifier heuristic|cnn] [--annotate]
 //                           [--only <stem>[,<stem>]] [--limit N] [--out eval-report.json] [--blur 0.5 (cnn pre-blur)]
+//                           [--model public/models/seam.onnx (cnn model path)]
 //
 // real:      fixtures/images/*      labels fixtures/labels/<stem>.json
 // closeup:   fixtures/closeup/images/*    labels fixtures/closeup/labels/<stem>.json (same mosaics, landscape close-ups)
@@ -42,7 +43,7 @@ export async function decodeImage(path: string): Promise<RgbaImage> {
 }
 
 async function makeCnn(): Promise<SeamClassifier | null> {
-  const modelPath = join(root, 'public/models/seam.onnx');
+  const modelPath = resolve(root, arg('model', 'public/models/seam.onnx')!);
   if (!existsSync(modelPath)) {
     console.log(`[cnn] ${modelPath} not found — skipping CNN eval.`);
     return null;
@@ -86,6 +87,8 @@ interface PhotoReport {
   lowConfidenceLabel?: boolean;
   /** Best (dx,dy) shift of the prediction onto the label (≠0 when the grid is off by a row/col) and P/R under it. */
   aligned?: { dx: number; dy: number; matched: number; precision: number; recall: number };
+  /** Seam decisions on label-same-colour neighbour pairs (pred grid mapped by `aligned` shift): seam = positive. */
+  sameColourSeams?: { tp: number; fp: number; fn: number; tn: number };
   lowConfidence: number;
   ms: number;
   timings: Record<string, number>;
@@ -155,6 +158,24 @@ async function main() {
         const m = pred.filter((p) => trueKeys.has(rectKey({ ...p, x: p.x + dx, y: p.y + dy }))).length;
         if (m > best.matched || (m === best.matched && dx === 0 && dy === 0)) best = { dx, dy, matched: m };
       }
+      if (r.pairs) {
+        const L = label.grid;
+        const own = new Int32Array(L.cols * L.rows).fill(-1);
+        const col: string[] = new Array(L.cols * L.rows).fill('');
+        truth.forEach((p, i) => {
+          for (let y = p.y; y < Math.min(L.rows, p.y + p.h); y++) for (let x = p.x; x < Math.min(L.cols, p.x + p.w); x++) { own[y * L.cols + x] = i; col[y * L.cols + x] = p.color; }
+        });
+        const at = (x: number, y: number) => (x >= 0 && y >= 0 && x < L.cols && y < L.rows ? y * L.cols + x : -1);
+        const sc = { tp: 0, fp: 0, fn: 0, tn: 0 };
+        for (const pd of r.pairs) {
+          const a = at(pd.col + best.dx, pd.row + best.dy);
+          const b = pd.dir === 'h' ? at(pd.col + 1 + best.dx, pd.row + best.dy) : at(pd.col + best.dx, pd.row + 1 + best.dy);
+          if (a < 0 || b < 0 || own[a] < 0 || own[b] < 0 || col[a] !== col[b]) continue;
+          const truthSeam = own[a] !== own[b];
+          if (pd.seam && truthSeam) sc.tp++; else if (pd.seam) sc.fp++; else if (truthSeam) sc.fn++; else sc.tn++;
+        }
+        rep.sameColourSeams = sc;
+      }
       rep.aligned = { ...best, precision: pred.length ? +(best.matched / pred.length).toFixed(3) : 0, recall: +(best.matched / truth.length).toFixed(3) };
       const matched = pred.filter((p) => trueKeys.has(rectKey(p)));
       rep.matched = matched.length;
@@ -213,6 +234,7 @@ async function main() {
   const summary = {
     set,
     classifier: classifierName,
+    model: classifierName === 'cnn' ? arg('model', 'public/models/seam.onnx') : undefined,
     photos: reports.length,
     labelled: labelled.length,
     categories,
@@ -224,6 +246,10 @@ async function main() {
     gridOkPiecePrecision: pr(gridOk).precision,
     gridOkPieceRecall: pr(gridOk).recall,
     shiftAlignedPrecision: (() => { const m = labelled.reduce((s, r) => s + (r.aligned?.matched ?? 0), 0); const p = labelled.reduce((s, r) => s + r.predPieces, 0); return p ? m / p : 0; })(),
+    ...(() => {
+      const t = labelled.reduce((acc, r) => { const c = r.sameColourSeams; if (c) { acc.tp += c.tp; acc.fp += c.fp; acc.fn += c.fn; } return acc; }, { tp: 0, fp: 0, fn: 0 });
+      return { sameColourSeamPrecision: t.tp + t.fp ? t.tp / (t.tp + t.fp) : NaN, sameColourSeamRecall: t.tp + t.fn ? t.tp / (t.tp + t.fn) : NaN };
+    })(),
     meanCellColourAcc: mean(labelled.filter((r) => r.cellColourAcc !== undefined).map((r) => r.cellColourAcc!)),
     lowConfidenceLabels: labelled.filter((r) => r.lowConfidenceLabel).map((r) => r.image),
     meanMs: mean(reports.map((r) => r.ms)),

@@ -71,3 +71,20 @@ The model is trained with horizontal and vertical flips, so the exact orientatio
   partly skipped. The model is trained on both the raw and the pre-blurred variants. If accuracy on real
   photos is poor, try a light blur (σ ≈ 0.5·P/16) on the warped image before cropping, or a pitch near 32.
 * Different-colour pairs are almost always seams. The model's value is in same-colour pairs.
+
+## Fine-tuning on real photos
+
+    npx tsx scripts/export-seam-crops.ts            # exact pipeline crops of the 16 labelled photos -> ml/data/real/
+    python ml/finetune.py --cv                       # 4 mosaic-grouped folds -> ml/runs/fold{k}/seam.onnx (+ pair metrics)
+    python ml/eval_folds.py --baseline ml/models/seam-synthetic.onnx [--root <frozen checkout>]   # full-pipeline OOF eval
+    python ml/finetune.py --final --export           # all 16 photos -> public/models/seam.onnx + seam.json
+
+* `export-seam-crops.ts` runs the real pipeline up to the grid fit and applies the CNN pre-blur. It cuts
+  crops with `crop.ts` and aligns the fitted grid to the label by colour agreement. Photos with an
+  ambiguous alignment are skipped and listed in `summary.json`. The Python `dataset.extract_crop`
+  reproduces `crop.ts` to within 3e-8.
+* Fine-tuning starts from the synthetic checkpoint, uses 50/50 real/synthetic batches, and adds 8
+  jittered re-crops per real pair. Same-colour pairs are oversampled 3x. Pairs touching cells listed in
+  `real_uncertain.json` (from the label notes) get loss weight 0.3.
+* `ml/models/seam-synthetic.onnx` is the previous synthetic-only model. It is kept for comparison and
+  is not shipped, because everything in `public/` is precached by the PWA.

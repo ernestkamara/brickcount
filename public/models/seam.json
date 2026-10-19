@@ -28,9 +28,14 @@
  },
  "normalisation": "x/255",
  "threshold": 0.5,
- "val_acc": 0.9953,
- "same_colour_val_acc": 0.9945,
+ "val_acc": 0.9937,
+ "same_colour_val_acc": 0.9927,
  "params": 58049,
- "trained_on": "synthetic crops only (ml/dataset.py), warped pitch 40-90 px",
- "onnx_max_abs_diff_vs_torch": 3.0517578125e-05
+ "trained_on": "synthetic crops (ml/dataset.py) then fine-tuned (ml/finetune.py) on 16 labelled real photos (fixtures real + closeup, 7221 pairs, x9 with jittered re-crops) mixed 50/50 with synthetic; pipeline pre-blur 0.5 crop px",
+ "onnx_max_abs_diff_vs_torch": 4.0531158447265625e-06,
+ "val_note": "val_acc/same_colour_val_acc = held-out synthetic mosaics; real_oof_* = 4-fold mosaic-grouped CV on exact pipeline crops of the 16 labelled photos",
+ "real_oof_pair_acc": 0.9634,
+ "real_oof_same_colour_acc": 0.9499,
+ "real_oof_same_colour_seam_precision": 0.9657,
+ "real_oof_same_colour_seam_recall": 0.8947
 }

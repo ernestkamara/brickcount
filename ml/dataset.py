@@ -34,16 +34,19 @@ import render_synthetic as RS
 CROP_W, CROP_H = 32, 16
 
 
-def pair_frame(col, row, d, P):
-    """Centre and crop axes (ex: across the gap, ey: along the gap) in warped px."""
+def pair_frame(col, row, d, P, Ph=None):
+    """Centre, crop axes (ex: across the gap, ey: along the gap) and pitches along ex/ey (Pa, Pb).
+    P is the column pitch (warped width / cols), Ph the row pitch (default P), as in crop.ts."""
+    Ph = P if Ph is None else Ph
     if d == 0:  # 'h'
-        return np.array([(col + 1) * P, (row + 0.5) * P]), np.array([1.0, 0.0]), np.array([0.0, 1.0])
-    return np.array([(col + 0.5) * P, (row + 1) * P]), np.array([0.0, 1.0]), np.array([-1.0, 0.0])
+        return np.array([(col + 1) * P, (row + 0.5) * Ph]), np.array([1.0, 0.0]), np.array([0.0, 1.0]), P, Ph
+    return np.array([(col + 0.5) * P, (row + 1) * Ph]), np.array([0.0, 1.0]), np.array([-1.0, 0.0]), Ph, P
 
 
-def crop_coords(c, ex, ey, step):
-    i = (np.arange(CROP_W) + 0.5 - CROP_W / 2) * step
-    j = (np.arange(CROP_H) + 0.5 - CROP_H / 2) * step
+def crop_coords(c, ex, ey, step_a, step_b=None):
+    step_b = step_a if step_b is None else step_b
+    i = (np.arange(CROP_W) + 0.5 - CROP_W / 2) * step_a
+    j = (np.arange(CROP_H) + 0.5 - CROP_H / 2) * step_b
     X = c[0] + i[None, :] * ex[0] + j[:, None] * ey[0]
     Y = c[1] + i[None, :] * ex[1] + j[:, None] * ey[1]
     return X, Y
@@ -62,17 +65,20 @@ def bilinear(img, X, Y):
     return (a * (1 - ax) + b * ax) * (1 - ay) + (c * (1 - ax) + d * ax) * ay
 
 
-def extract_crop(img, col, row, d, P, rng=None, jitter=True):
-    c, ex, ey = pair_frame(col, row, d, P)
-    step = P / 16.0
+def extract_crop(img, col, row, d, P, rng=None, jitter=True, Ph=None, jit=(0.10, 0.15, 4.0)):
+    """One crop (CROP_H, CROP_W, C) float. jit = (pitch scale, offset fraction of pitch, rotation deg)."""
+    c, ex, ey, Pa, Pb = pair_frame(col, row, d, P, Ph)
+    sa, sb = Pa / 16.0, Pb / 16.0
     if jitter and rng is not None:
-        step *= rng.uniform(0.9, 1.1)
-        c = c + ex * rng.uniform(-0.15, 0.15) * P + ey * rng.uniform(-0.15, 0.15) * P
-        th = math.radians(rng.uniform(-4, 4))
+        js, jo, jr = jit
+        k = rng.uniform(1 - js, 1 + js)
+        sa, sb = sa * k, sb * k
+        c = c + ex * rng.uniform(-jo, jo) * Pa + ey * rng.uniform(-jo, jo) * Pb
+        th = math.radians(rng.uniform(-jr, jr))
         cs, sn = math.cos(th), math.sin(th)
         rot = np.array([[cs, -sn], [sn, cs]])
         ex, ey = rot @ ex, rot @ ey
-    X, Y = crop_coords(c, ex, ey, step)
+    X, Y = crop_coords(c, ex, ey, sa, sb)
     return bilinear(img, X, Y)
 
 

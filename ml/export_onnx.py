@@ -19,6 +19,35 @@ ML = Path(__file__).resolve().parent
 ROOT = ML.parent
 
 
+def export_and_verify(model, out, extra_x=None):
+    """Export to ONNX (opset 17, dynamic batch) and check onnxruntime matches torch. Returns max |diff|."""
+    model.eval()
+    out = Path(out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    dummy = torch.rand(4, 3, 16, 32)
+    torch.onnx.export(model, dummy, str(out), input_names=["input"], output_names=["logit"],
+                      dynamic_axes={"input": {0: "N"}, "logit": {0: "N"}}, opset_version=17,
+                      do_constant_folding=True, dynamo=False)
+    m = onnx.load(str(out))
+    onnx.checker.check_model(m)
+    xs = [np.random.default_rng(0).random((1, 3, 16, 32), dtype=np.float32),
+          np.random.default_rng(1).random((37, 3, 16, 32), dtype=np.float32)]
+    if extra_x is not None:
+        xs.append(np.ascontiguousarray(extra_x, dtype=np.float32))
+    sess = ort.InferenceSession(str(out), providers=["CPUExecutionProvider"])
+    maxdiff = 0.0
+    with torch.no_grad():
+        for x in xs:
+            ref = model(torch.from_numpy(x)).numpy()
+            got = sess.run(["logit"], {"input": x})[0]
+            assert got.shape == (x.shape[0], 1), got.shape
+            maxdiff = max(maxdiff, float(np.abs(ref - got).max()))
+    print(f"{out.name}: opset {[o.version for o in m.opset_import]}, {out.stat().st_size} bytes, "
+          f"onnxruntime vs torch max |diff| = {maxdiff:.2e}", "OK" if maxdiff < 1e-4 else "FAIL")
+    assert maxdiff < 1e-4
+    return maxdiff
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ckpt", default=str(ML / "runs" / "seam.pt"))
@@ -27,32 +56,11 @@ def main():
     a = ap.parse_args()
     model = SeamNet()
     model.load_state_dict(torch.load(a.ckpt, map_location="cpu"))
-    model.eval()
-    out = Path(a.out)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    dummy = torch.rand(4, 3, 16, 32)
-    torch.onnx.export(model, dummy, str(out), input_names=["input"], output_names=["logit"],
-                      dynamic_axes={"input": {0: "N"}, "logit": {0: "N"}}, opset_version=17,
-                      do_constant_folding=True, dynamo=False)
-    m = onnx.load(str(out))
-    onnx.checker.check_model(m)
-    print("opset", [o.version for o in m.opset_import], "size", out.stat().st_size, "bytes")
-
-    # parity check on random + dataset crops, several batch sizes
-    xs = [np.random.default_rng(0).random((1, 3, 16, 32), dtype=np.float32),
-          np.random.default_rng(1).random((37, 3, 16, 32), dtype=np.float32)]
+    extra = None
     if Path(a.data).exists():
-        X = np.load(a.data)["X"][:1000]
-        xs.append(X.transpose(0, 3, 1, 2).astype(np.float32) / 255.0)
-    sess = ort.InferenceSession(str(out), providers=["CPUExecutionProvider"])
-    maxdiff = 0.0
-    for x in xs:
-        ref = model(torch.from_numpy(x)).detach().numpy()
-        got = sess.run(["logit"], {"input": x})[0]
-        assert got.shape == (x.shape[0], 1), got.shape
-        maxdiff = max(maxdiff, float(np.abs(ref - got).max()))
-    print(f"onnxruntime vs torch max |diff| = {maxdiff:.2e}", "OK" if maxdiff < 1e-4 else "FAIL")
-    assert maxdiff < 1e-4
+        extra = np.load(a.data)["X"][:1000].transpose(0, 3, 1, 2).astype(np.float32) / 255.0
+    maxdiff = export_and_verify(model, a.out, extra)
+    out = Path(a.out)
 
     metrics_p = Path(a.ckpt).with_suffix(".metrics.json")
     metrics = json.loads(metrics_p.read_text()) if metrics_p.exists() else {}
