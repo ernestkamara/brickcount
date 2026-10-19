@@ -23,46 +23,84 @@ Also report the total number of studs and the grid size in studs. Work row by ro
 
 const MAX_B64 = 8 * 1024 * 1024;
 
-export const visionCheck = onCall({ secrets: [ANTHROPIC_API_KEY], timeoutSeconds: 300, memory: '512MiB' }, async (req) => {
-  const image = req.data?.imageBase64;
-  const mediaType = req.data?.mediaType ?? 'image/jpeg';
-  if (typeof image !== 'string' || image.length === 0 || image.length > MAX_B64) {
-    throw new HttpsError('invalid-argument', 'imageBase64 (≤8 MB) is required');
-  }
-  if (mediaType !== 'image/jpeg' && mediaType !== 'image/png') {
-    throw new HttpsError('invalid-argument', 'mediaType must be image/jpeg or image/png');
-  }
+// Abuse limits. Every call is a paid vision request, so the function only accepts
+// single-use App Check tokens from the real app, runs on one instance, and caps calls
+// per client IP and in total per day. The counters live in memory, so they reset when
+// the instance is recycled: a backstop, not a billing guarantee (set an Anthropic spend limit too).
+const PER_IP_DAILY = 20;
+const GLOBAL_DAILY = 300;
+const DAY_MS = 24 * 60 * 60 * 1000;
+let windowStart = Date.now();
+let globalCount = 0;
+const perIp = new Map<string, number>();
 
-  const client = new Anthropic({ apiKey: ANTHROPIC_API_KEY.value() });
-  try {
-    const response = await client.beta.messages.parse({
-      model: 'claude-opus-5-5',
-      max_tokens: 16000,
-      output_config: { effort: 'high', format: betaZodOutputFormat(VisionCount) },
-      betas: ['server-side-fallback-2026-07-01'],
-      fallbacks: 'default',
-      messages: [
-        {
-          role: 'user',
-          content: [
-            { type: 'image', source: { type: 'base64', media_type: mediaType, data: image } },
-            { type: 'text', text: PROMPT },
-          ],
-        },
-      ],
-    });
-    if (response.stop_reason === 'refusal') {
-      throw new HttpsError('failed-precondition', 'The model declined this image');
-    }
-    if (!response.parsed_output) {
-      throw new HttpsError('internal', `No structured output (stop_reason=${response.stop_reason})`);
-    }
-    return { ...response.parsed_output, model: response.model };
-  } catch (err) {
-    if (err instanceof HttpsError) throw err;
-    if (err instanceof Anthropic.RateLimitError) throw new HttpsError('resource-exhausted', 'Rate limited, try again shortly');
-    if (err instanceof Anthropic.BadRequestError) throw new HttpsError('invalid-argument', err.message);
-    if (err instanceof Anthropic.APIError) throw new HttpsError('unavailable', `Vision API error ${err.status}`);
-    throw err;
+function takeQuota(ip: string): boolean {
+  if (Date.now() - windowStart > DAY_MS) {
+    windowStart = Date.now();
+    globalCount = 0;
+    perIp.clear();
   }
-});
+  const used = perIp.get(ip) ?? 0;
+  if (used >= PER_IP_DAILY || globalCount >= GLOBAL_DAILY) return false;
+  perIp.set(ip, used + 1);
+  globalCount++;
+  return true;
+}
+
+export const visionCheck = onCall(
+  {
+    secrets: [ANTHROPIC_API_KEY],
+    enforceAppCheck: true,
+    consumeAppCheckToken: true,
+    maxInstances: 1,
+    concurrency: 4,
+    timeoutSeconds: 300,
+    memory: '512MiB',
+  },
+  async (req) => {
+    if (!takeQuota(req.rawRequest.ip ?? 'unknown')) {
+      throw new HttpsError('resource-exhausted', 'Daily cloud-check limit reached, try again tomorrow');
+    }
+    const image = req.data?.imageBase64;
+    const mediaType = req.data?.mediaType ?? 'image/jpeg';
+    if (typeof image !== 'string' || image.length === 0 || image.length > MAX_B64) {
+      throw new HttpsError('invalid-argument', 'imageBase64 (≤8 MB) is required');
+    }
+    if (mediaType !== 'image/jpeg' && mediaType !== 'image/png') {
+      throw new HttpsError('invalid-argument', 'mediaType must be image/jpeg or image/png');
+    }
+
+    const client = new Anthropic({ apiKey: ANTHROPIC_API_KEY.value() });
+    try {
+      const response = await client.beta.messages.parse({
+        model: 'claude-opus-5-5',
+        max_tokens: 16000,
+        output_config: { effort: 'high', format: betaZodOutputFormat(VisionCount) },
+        betas: ['server-side-fallback-2026-07-01'],
+        fallbacks: 'default',
+        messages: [
+          {
+            role: 'user',
+            content: [
+              { type: 'image', source: { type: 'base64', media_type: mediaType, data: image } },
+              { type: 'text', text: PROMPT },
+            ],
+          },
+        ],
+      });
+      if (response.stop_reason === 'refusal') {
+        throw new HttpsError('failed-precondition', 'The model declined this image');
+      }
+      if (!response.parsed_output) {
+        throw new HttpsError('internal', `No structured output (stop_reason=${response.stop_reason})`);
+      }
+      return { ...response.parsed_output, model: response.model };
+    } catch (err) {
+      if (err instanceof HttpsError) throw err;
+      if (err instanceof Anthropic.RateLimitError) throw new HttpsError('resource-exhausted', 'Rate limited, try again shortly');
+      if (err instanceof Anthropic.BadRequestError) throw new HttpsError('invalid-argument', err.message);
+      if (err instanceof Anthropic.APIError) throw new HttpsError('unavailable', `Vision API error ${err.status}`);
+      throw err;
+    }
+  },
+);

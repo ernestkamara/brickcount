@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react';
-import { removePhoto, type PhotoItem } from '../lib/store';
+import { cloudCheckAvailable } from '../lib/cloudCheck';
+import { removePhoto, useAppState, type PhotoItem } from '../lib/store';
 import { annotatedPng, safeName, shareOrDownload, toCsv, toJson } from '../lib/export';
+import { CloudCheck } from './CloudCheck';
 import { CornerEditor } from './CornerEditor';
 import { defaultCorners } from './geometry';
 import { StatusChip } from './QueueList';
@@ -10,6 +12,7 @@ import { ReviewView } from './ReviewView';
 
 export function PhotoDetail({ photo, onBack }: { photo: PhotoItem; onBack(): void }) {
   const [editCorners, setEditCorners] = useState(false);
+  const cloudCheck = useAppState((s) => s.settings.cloudCheck) && cloudCheckAvailable;
   const { result } = photo;
   const onToggle = useCallback((c: number, r: number, d: 'h' | 'v') => void toggleSeam(photo.id, c, r, d), [photo.id]);
   const initialCorners = photo.corners ?? result?.grid?.corners ?? defaultCorners(photo.width, photo.height);
@@ -57,6 +60,7 @@ export function PhotoDetail({ photo, onBack }: { photo: PhotoItem; onBack(): voi
               Tap the line between two studs to split or merge pieces. <span className="amber">Amber</span> = low confidence, worth a check.
             </p>
             <Results result={result} />
+            {cloudCheck && <CloudCheck key={`${photo.id}:${photo.rev}`} source={photo.source} pieceCount={result.pieceCount} />}
             <div className="row wrap">
               <ExportButtons photo={photo} />
               <button type="button" className="btn ghost" onClick={() => setEditCorners(true)}>Adjust corners</button>

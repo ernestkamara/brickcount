@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { cloudCheckAvailable } from '../lib/cloudCheck';
 import { clearSettings, DEFAULT_SETTINGS, type GridChoice, type Settings } from '../lib/settings';
 import { clearPhotos, setSettings, useAppState } from '../lib/store';
 
@@ -69,10 +70,19 @@ export function SettingsDialog({ open, onClose }: { open: boolean; onClose(): vo
         </fieldset>
 
         <label className="toggle">
-          <input type="checkbox" checked={s.cloudCheck} onChange={(e) => set({ cloudCheck: e.target.checked })} />
+          <input
+            type="checkbox"
+            checked={s.cloudCheck && cloudCheckAvailable}
+            disabled={!cloudCheckAvailable}
+            onChange={(e) => set({ cloudCheck: e.target.checked })}
+          />
           <span>
             Cloud double-check
-            <small>Sends the photo to a server for a second opinion. Off by default; everything else stays on this device.</small>
+            <small>
+              {cloudCheckAvailable
+                ? 'Adds a button that sends one photo to a server for a second opinion. Off by default; everything else stays on this device.'
+                : 'Not available in this build.'}
+            </small>
           </span>
         </label>
 
