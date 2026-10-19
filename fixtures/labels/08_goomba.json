@@ -1,0 +1,521 @@
+{
+ "image": "08_goomba.jpg",
+ "grid": {
+  "cols": 16,
+  "rows": 16
+ },
+ "pieces": [
+  {
+   "x": 0,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 4,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 8,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 10,
+   "y": 0,
+   "w": 6,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 4,
+   "y": 1,
+   "w": 1,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 5,
+   "y": 1,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 6,
+   "y": 1,
+   "w": 2,
+   "h": 3,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 8,
+   "y": 1,
+   "w": 2,
+   "h": 3,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 10,
+   "y": 1,
+   "w": 1,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 11,
+   "y": 1,
+   "w": 2,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 13,
+   "y": 1,
+   "w": 1,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 14,
+   "y": 1,
+   "w": 2,
+   "h": 4,
+   "color": "white"
+  },
+  {
+   "x": 0,
+   "y": 2,
+   "w": 2,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 2,
+   "y": 2,
+   "w": 2,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 4,
+   "y": 2,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 11,
+   "y": 2,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 2,
+   "y": 3,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 4,
+   "y": 3,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 10,
+   "y": 3,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 12,
+   "y": 3,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 0,
+   "y": 4,
+   "w": 2,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 2,
+   "y": 4,
+   "w": 2,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 4,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 4,
+   "w": 3,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 8,
+   "y": 4,
+   "w": 3,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 11,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 12,
+   "y": 4,
+   "w": 2,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 0,
+   "y": 5,
+   "w": 1,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 1,
+   "y": 5,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 2,
+   "y": 5,
+   "w": 2,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 4,
+   "y": 5,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 11,
+   "y": 5,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 12,
+   "y": 5,
+   "w": 3,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 15,
+   "y": 5,
+   "w": 1,
+   "h": 4,
+   "color": "white"
+  },
+  {
+   "x": 1,
+   "y": 6,
+   "w": 1,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 4,
+   "y": 6,
+   "w": 1,
+   "h": 4,
+   "color": "white"
+  },
+  {
+   "x": 5,
+   "y": 6,
+   "w": 4,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 9,
+   "y": 6,
+   "w": 2,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 11,
+   "y": 6,
+   "w": 1,
+   "h": 4,
+   "color": "white"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "w": 1,
+   "h": 4,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 2,
+   "y": 7,
+   "w": 2,
+   "h": 3,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 7,
+   "w": 1,
+   "h": 2,
+   "color": "black"
+  },
+  {
+   "x": 6,
+   "y": 7,
+   "w": 1,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 7,
+   "y": 7,
+   "w": 2,
+   "h": 3,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 9,
+   "y": 7,
+   "w": 1,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 10,
+   "y": 7,
+   "w": 1,
+   "h": 2,
+   "color": "black"
+  },
+  {
+   "x": 12,
+   "y": 7,
+   "w": 3,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 1,
+   "y": 8,
+   "w": 1,
+   "h": 4,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 9,
+   "w": 2,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 9,
+   "y": 9,
+   "w": 2,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 12,
+   "y": 9,
+   "w": 3,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 15,
+   "y": 9,
+   "w": 1,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 2,
+   "y": 10,
+   "w": 4,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 6,
+   "y": 10,
+   "w": 4,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 10,
+   "y": 10,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 0,
+   "y": 11,
+   "w": 1,
+   "h": 3,
+   "color": "white"
+  },
+  {
+   "x": 2,
+   "y": 11,
+   "w": 4,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 6,
+   "y": 11,
+   "w": 4,
+   "h": 1,
+   "color": "tan"
+  },
+  {
+   "x": 10,
+   "y": 11,
+   "w": 4,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 14,
+   "y": 11,
+   "w": 2,
+   "h": 4,
+   "color": "white"
+  },
+  {
+   "x": 1,
+   "y": 12,
+   "w": 2,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 3,
+   "y": 12,
+   "w": 2,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 5,
+   "y": 12,
+   "w": 6,
+   "h": 2,
+   "color": "tan"
+  },
+  {
+   "x": 11,
+   "y": 12,
+   "w": 1,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 12,
+   "y": 12,
+   "w": 2,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 12,
+   "y": 13,
+   "w": 2,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 0,
+   "y": 14,
+   "w": 4,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 4,
+   "y": 14,
+   "w": 3,
+   "h": 2,
+   "color": "black"
+  },
+  {
+   "x": 7,
+   "y": 14,
+   "w": 2,
+   "h": 2,
+   "color": "white"
+  },
+  {
+   "x": 9,
+   "y": 14,
+   "w": 3,
+   "h": 2,
+   "color": "black"
+  },
+  {
+   "x": 0,
+   "y": 15,
+   "w": 4,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 12,
+   "y": 15,
+   "w": 4,
+   "h": 1,
+   "color": "white"
+  }
+ ],
+ "notes": "Grid = studs whose centres are visible inside the frame aperture; pieces cut by the frame are labelled by their visible extent. Column 0 and row 0 are about half visible. Uncertain: top row (10,0) white taken as one 1x6 (no visible seam); brown L-shapes at (4,2)-(5,1), (4,3)-(4,4), (10,1)-(12,2), (10,3)-(11,4) (split choice does not change count)."
+}
