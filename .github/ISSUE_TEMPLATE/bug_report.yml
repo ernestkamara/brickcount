@@ -1,0 +1,27 @@
+name: Bug report
+description: The app gave a wrong count, crashed, or behaved in a strange way.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you see instead? If the count was wrong, tell us the true count if you know it.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and browser
+      placeholder: iPhone 15, Safari 18
+  - type: textarea
+    id: photo
+    attributes:
+      label: Photo
+      description: Drag the photo here if you can share it. Remove location data first.
