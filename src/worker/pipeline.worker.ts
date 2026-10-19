@@ -2,8 +2,11 @@
 // Pipeline worker: loads OpenCV.js once, converts the transferred ImageBitmap to RGBA and
 // runs the pipeline. Exposed with Comlink as WorkerApi (src/worker/api.ts).
 import * as Comlink from 'comlink';
+// Static default import on purpose: the bundler wraps a dynamic import() of this CJS module
+// in an object inheriting Promise.prototype, which breaks promise adoption in the browser.
+import opencvModule from '@techstark/opencv-js';
 import type { CV } from '../pipeline/cv';
-import { loadOpenCv } from '../pipeline/cv';
+import { resolveCv } from '../pipeline/cv';
 import { regroup as regroupPieces, runPipeline } from '../pipeline/run';
 import type { GridSize, PairDecision, RgbaImage, ScanOptions, StudCell } from '../pipeline/types';
 import type { WorkerApi } from './api';
@@ -14,7 +17,7 @@ const MAX_INPUT_SIDE = 6000;
 let cvPromise: Promise<CV> | null = null;
 
 function getCv(): Promise<CV> {
-  cvPromise ??= loadOpenCv().catch((e) => {
+  cvPromise ??= resolveCv(opencvModule).catch((e) => {
     cvPromise = null;
     throw e;
   });

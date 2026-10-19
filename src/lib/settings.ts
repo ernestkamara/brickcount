@@ -16,7 +16,7 @@ export const DEFAULT_SETTINGS: Settings = {
   customCols: 32,
   customRows: 32,
   countBaseplate: true,
-  classifier: 'heuristic',
+  classifier: 'cnn',
   cloudCheck: false,
 };
 

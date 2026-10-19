@@ -13,21 +13,28 @@ export async function resolveCv(mod: unknown): Promise<CV> {
   let m: any = mod;
   if (m && typeof m === 'object' && 'default' in m && !m.Mat) m = m.default;
   if (m instanceof Promise) m = await m;
-  if (m && m.Mat) return m;
+  if (m && m.Mat) return unthen(m);
   if (m && typeof m.then === 'function') {
     // Emscripten modules can be self-resolving thenables: awaiting them directly loops.
     return new Promise((resolve) => {
-      m.then((ready: CV) => {
-        const r = ready ?? m;
-        if (r && typeof r.then === 'function') delete r.then;
-        resolve(r);
-      });
+      m.then((ready: CV) => resolve(unthen(ready ?? m)));
     });
   }
   if (!m) throw new Error('OpenCV.js module not found');
   await new Promise<void>((resolve) => {
     m.onRuntimeInitialized = () => resolve();
   });
+  return unthen(m);
+}
+
+/**
+ * Returning a thenable from an async function makes the runtime adopt it as a promise,
+ * which throws in the browser build ("Promise.prototype.then called on incompatible
+ * receiver"). Shadow `then` with an own undefined property; `delete` alone misses a
+ * `then` inherited from the prototype.
+ */
+function unthen(m: CV): CV {
+  if (m && typeof m.then === 'function') Object.defineProperty(m, 'then', { value: undefined, configurable: true });
   return m;
 }
 

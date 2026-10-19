@@ -56,8 +56,8 @@ export function SettingsDialog({ open, onClose }: { open: boolean; onClose(): vo
           <div className="seg" role="radiogroup" aria-label="Seam classifier">
             {(
               [
-                ['heuristic', 'Heuristic'],
-                ['cnn', 'Neural (beta)'],
+                ['heuristic', 'Heuristic (fast)'],
+                ['cnn', 'Neural (recommended)'],
               ] as const
             ).map(([v, l]) => (
               <label key={v} className={s.classifier === v ? 'on' : ''}>

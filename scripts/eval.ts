@@ -1,9 +1,10 @@
-// Evaluate the pipeline on the golden photos (or the synthetic set).
+// Evaluate the pipeline on the golden photos (or the close-up / synthetic sets).
 //
-//   npx tsx scripts/eval.ts [--set real|synthetic] [--classifier heuristic|cnn] [--annotate]
+//   npx tsx scripts/eval.ts [--set real|closeup|synthetic] [--classifier heuristic|cnn] [--annotate]
 //                           [--only <stem>[,<stem>]] [--limit N] [--out eval-report.json] [--blur 0.5 (cnn pre-blur)]
 //
 // real:      fixtures/images/*      labels fixtures/labels/<stem>.json
+// closeup:   fixtures/closeup/images/*    labels fixtures/closeup/labels/<stem>.json (same mosaics, landscape close-ups)
 // synthetic: fixtures/synthetic/images/*  labels fixtures/synthetic/labels/<stem>.json
 // Missing labels -> prediction only. --annotate writes eval-out/<stem>.png (rectified image,
 // green = correct piece, red = wrong predicted piece, blue dashed = missed true piece).
@@ -30,8 +31,10 @@ const only = arg('only')?.split(',');
 const limit = Number(arg('limit', '0'));
 const outPath = arg('out', 'eval-report.json')!;
 const root = process.cwd();
-const imgDir = set === 'synthetic' ? join(root, 'fixtures/synthetic/images') : join(root, 'fixtures/images');
-const labelDir = set === 'synthetic' ? join(root, 'fixtures/synthetic/labels') : join(root, 'fixtures/labels');
+const setDir = set === 'real' ? 'fixtures' : `fixtures/${set}`;
+const imgDir = join(root, setDir, 'images');
+const labelDir = join(root, setDir, 'labels');
+if (!existsSync(imgDir)) throw new Error(`Unknown set "${set}": ${imgDir} not found`);
 
 export async function decodeImage(path: string): Promise<RgbaImage> {
   const { data, info } = await sharp(path).rotate().ensureAlpha().raw().toBuffer({ resolveWithObject: true });

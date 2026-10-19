@@ -165,6 +165,7 @@ export async function runPipelineDetailed(
     };
   } catch (e) {
     timingsMs.total = Math.round(performance.now() - t0);
+    console.error('BrickCount pipeline failed', e);
     return { result: { ...base, status: 'error', message: e instanceof Error ? e.message : String(e) }, debug };
   }
 }
