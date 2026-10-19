@@ -1,0 +1,36 @@
+{
+ "input": {
+  "name": "input",
+  "shape": [
+   "N",
+   3,
+   16,
+   32
+  ],
+  "dtype": "float32",
+  "layout": "NCHW RGB"
+ },
+ "output": {
+  "name": "logit",
+  "shape": [
+   "N",
+   1
+  ],
+  "meaning": "seam logit; sigmoid(logit) = P(seam)"
+ },
+ "crop": {
+  "w": 32,
+  "h": 16,
+  "window": "2*pitch wide x 1*pitch tall centred on the gap, step = pitch/16",
+  "sample": "crop px (i,j) <- centre + ((i+0.5-16)*ex + (j+0.5-8)*ey) * pitch/16; image pixel k centre at k+0.5; bilinear, clamp",
+  "h_pair": "centre ((col+1)P, (row+0.5)P), ex=(1,0), ey=(0,1)",
+  "v_pair": "centre ((col+0.5)P, (row+1)P), ex=(0,1), ey=(-1,0) (upper stud on the left)"
+ },
+ "normalisation": "x/255",
+ "threshold": 0.5,
+ "val_acc": 0.9953,
+ "same_colour_val_acc": 0.9945,
+ "params": 58049,
+ "trained_on": "synthetic crops only (ml/dataset.py), warped pitch 40-90 px",
+ "onnx_max_abs_diff_vs_torch": 3.0517578125e-05
+}

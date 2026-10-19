@@ -1,0 +1,455 @@
+{
+ "image": "synth_019.jpg",
+ "grid": {
+  "cols": 16,
+  "rows": 16
+ },
+ "corners": [
+  [
+   293.86,
+   899.73
+  ],
+  [
+   1453.03,
+   870.07
+  ],
+  [
+   1377.84,
+   1873.56
+  ],
+  [
+   373.22,
+   1988.54
+  ]
+ ],
+ "pieces": [
+  {
+   "x": 0,
+   "y": 0,
+   "w": 2,
+   "h": 12,
+   "color": "bright_pink"
+  },
+  {
+   "x": 2,
+   "y": 0,
+   "w": 1,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 3,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "color": "bright_pink"
+  },
+  {
+   "x": 4,
+   "y": 0,
+   "w": 1,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "w": 3,
+   "h": 1,
+   "color": "yellow"
+  },
+  {
+   "x": 8,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "color": "orange"
+  },
+  {
+   "x": 9,
+   "y": 0,
+   "w": 1,
+   "h": 2,
+   "color": "yellow"
+  },
+  {
+   "x": 10,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 14,
+   "y": 0,
+   "w": 2,
+   "h": 4,
+   "color": "bright_pink"
+  },
+  {
+   "x": 3,
+   "y": 1,
+   "w": 1,
+   "h": 1,
+   "color": "bright_pink"
+  },
+  {
+   "x": 5,
+   "y": 1,
+   "w": 3,
+   "h": 1,
+   "color": "yellow"
+  },
+  {
+   "x": 8,
+   "y": 1,
+   "w": 1,
+   "h": 1,
+   "color": "yellow"
+  },
+  {
+   "x": 2,
+   "y": 2,
+   "w": 1,
+   "h": 6,
+   "color": "bright_pink"
+  },
+  {
+   "x": 3,
+   "y": 2,
+   "w": 2,
+   "h": 3,
+   "color": "dark_brown"
+  },
+  {
+   "x": 5,
+   "y": 2,
+   "w": 2,
+   "h": 1,
+   "color": "dark_brown"
+  },
+  {
+   "x": 7,
+   "y": 2,
+   "w": 1,
+   "h": 4,
+   "color": "dark_brown"
+  },
+  {
+   "x": 8,
+   "y": 2,
+   "w": 1,
+   "h": 4,
+   "color": "dark_brown"
+  },
+  {
+   "x": 9,
+   "y": 2,
+   "w": 2,
+   "h": 1,
+   "color": "dark_brown"
+  },
+  {
+   "x": 11,
+   "y": 2,
+   "w": 1,
+   "h": 2,
+   "color": "dark_brown"
+  },
+  {
+   "x": 12,
+   "y": 2,
+   "w": 1,
+   "h": 6,
+   "color": "bright_pink"
+  },
+  {
+   "x": 13,
+   "y": 2,
+   "w": 1,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 5,
+   "y": 3,
+   "w": 2,
+   "h": 8,
+   "color": "dark_brown"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "w": 1,
+   "h": 8,
+   "color": "dark_brown"
+  },
+  {
+   "x": 10,
+   "y": 3,
+   "w": 1,
+   "h": 8,
+   "color": "dark_brown"
+  },
+  {
+   "x": 11,
+   "y": 4,
+   "w": 1,
+   "h": 6,
+   "color": "dark_brown"
+  },
+  {
+   "x": 13,
+   "y": 4,
+   "w": 2,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 15,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "color": "bright_pink"
+  },
+  {
+   "x": 3,
+   "y": 5,
+   "w": 2,
+   "h": 4,
+   "color": "dark_brown"
+  },
+  {
+   "x": 15,
+   "y": 5,
+   "w": 1,
+   "h": 3,
+   "color": "bright_pink"
+  },
+  {
+   "x": 7,
+   "y": 6,
+   "w": 1,
+   "h": 4,
+   "color": "dark_brown"
+  },
+  {
+   "x": 8,
+   "y": 6,
+   "w": 1,
+   "h": 3,
+   "color": "dark_brown"
+  },
+  {
+   "x": 13,
+   "y": 6,
+   "w": 1,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 14,
+   "y": 6,
+   "w": 1,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 2,
+   "y": 8,
+   "w": 1,
+   "h": 6,
+   "color": "bright_pink"
+  },
+  {
+   "x": 12,
+   "y": 8,
+   "w": 1,
+   "h": 1,
+   "color": "dark_bluish_gray"
+  },
+  {
+   "x": 13,
+   "y": 8,
+   "w": 2,
+   "h": 1,
+   "color": "white"
+  },
+  {
+   "x": 15,
+   "y": 8,
+   "w": 1,
+   "h": 1,
+   "color": "light_yellow"
+  },
+  {
+   "x": 3,
+   "y": 9,
+   "w": 1,
+   "h": 3,
+   "color": "dark_brown"
+  },
+  {
+   "x": 4,
+   "y": 9,
+   "w": 1,
+   "h": 2,
+   "color": "dark_brown"
+  },
+  {
+   "x": 8,
+   "y": 9,
+   "w": 1,
+   "h": 4,
+   "color": "dark_brown"
+  },
+  {
+   "x": 12,
+   "y": 9,
+   "w": 4,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 7,
+   "y": 10,
+   "w": 1,
+   "h": 2,
+   "color": "dark_brown"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "w": 1,
+   "h": 3,
+   "color": "dark_brown"
+  },
+  {
+   "x": 4,
+   "y": 11,
+   "w": 2,
+   "h": 2,
+   "color": "dark_brown"
+  },
+  {
+   "x": 6,
+   "y": 11,
+   "w": 1,
+   "h": 2,
+   "color": "dark_brown"
+  },
+  {
+   "x": 9,
+   "y": 11,
+   "w": 2,
+   "h": 1,
+   "color": "dark_brown"
+  },
+  {
+   "x": 12,
+   "y": 11,
+   "w": 1,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 13,
+   "y": 11,
+   "w": 3,
+   "h": 1,
+   "color": "bright_pink"
+  },
+  {
+   "x": 0,
+   "y": 12,
+   "w": 2,
+   "h": 4,
+   "color": "bright_pink"
+  },
+  {
+   "x": 3,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "color": "dark_brown"
+  },
+  {
+   "x": 7,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "color": "dark_brown"
+  },
+  {
+   "x": 9,
+   "y": 12,
+   "w": 2,
+   "h": 1,
+   "color": "dark_brown"
+  },
+  {
+   "x": 13,
+   "y": 12,
+   "w": 1,
+   "h": 4,
+   "color": "bright_pink"
+  },
+  {
+   "x": 14,
+   "y": 12,
+   "w": 2,
+   "h": 4,
+   "color": "bright_pink"
+  },
+  {
+   "x": 3,
+   "y": 13,
+   "w": 6,
+   "h": 1,
+   "color": "bright_pink"
+  },
+  {
+   "x": 9,
+   "y": 13,
+   "w": 1,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 10,
+   "y": 13,
+   "w": 3,
+   "h": 3,
+   "color": "bright_pink"
+  },
+  {
+   "x": 2,
+   "y": 14,
+   "w": 4,
+   "h": 1,
+   "color": "bright_pink"
+  },
+  {
+   "x": 6,
+   "y": 14,
+   "w": 3,
+   "h": 2,
+   "color": "bright_pink"
+  },
+  {
+   "x": 2,
+   "y": 15,
+   "w": 4,
+   "h": 1,
+   "color": "bright_pink"
+  },
+  {
+   "x": 9,
+   "y": 15,
+   "w": 1,
+   "h": 1,
+   "color": "bright_pink"
+  }
+ ],
+ "notes": "synthetic (ml/render_synthetic.py seed=1253); corners in pixel-edge coords"
+}

@@ -1,0 +1,518 @@
+{
+ "image": "synth_005.jpg",
+ "grid": {
+  "cols": 16,
+  "rows": 16
+ },
+ "corners": [
+  [
+   510.9,
+   964.49
+  ],
+  [
+   1199.58,
+   908.39
+  ],
+  [
+   1255.83,
+   1598.08
+  ],
+  [
+   565.98,
+   1653.33
+  ]
+ ],
+ "pieces": [
+  {
+   "x": 0,
+   "y": 0,
+   "w": 2,
+   "h": 6,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 2,
+   "y": 0,
+   "w": 1,
+   "h": 4,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 3,
+   "y": 0,
+   "w": 4,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 7,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 8,
+   "y": 0,
+   "w": 2,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 10,
+   "y": 0,
+   "w": 2,
+   "h": 6,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 12,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 3,
+   "y": 1,
+   "w": 4,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 7,
+   "y": 1,
+   "w": 3,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 3,
+   "y": 2,
+   "w": 3,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 6,
+   "y": 2,
+   "w": 4,
+   "h": 6,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 12,
+   "y": 2,
+   "w": 2,
+   "h": 6,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 14,
+   "y": 2,
+   "w": 2,
+   "h": 12,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 3,
+   "y": 3,
+   "w": 1,
+   "h": 4,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 4,
+   "y": 3,
+   "w": 2,
+   "h": 6,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 2,
+   "y": 4,
+   "w": 1,
+   "h": 3,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 0,
+   "y": 6,
+   "w": 2,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 10,
+   "y": 6,
+   "w": 2,
+   "h": 2,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "w": 1,
+   "h": 2,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 1,
+   "y": 7,
+   "w": 3,
+   "h": 2,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 6,
+   "y": 8,
+   "w": 3,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 9,
+   "y": 8,
+   "w": 1,
+   "h": 4,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 10,
+   "y": 8,
+   "w": 1,
+   "h": 8,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "w": 1,
+   "h": 3,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 12,
+   "y": 8,
+   "w": 2,
+   "h": 4,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 0,
+   "y": 9,
+   "w": 1,
+   "h": 1,
+   "color": "light_nougat"
+  },
+  {
+   "x": 1,
+   "y": 9,
+   "w": 2,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 3,
+   "y": 9,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 4,
+   "y": 9,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 5,
+   "y": 9,
+   "w": 2,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 7,
+   "y": 9,
+   "w": 1,
+   "h": 2,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 8,
+   "y": 9,
+   "w": 1,
+   "h": 2,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 0,
+   "y": 10,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 1,
+   "y": 10,
+   "w": 2,
+   "h": 1,
+   "color": "dark_red"
+  },
+  {
+   "x": 3,
+   "y": 10,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 4,
+   "y": 10,
+   "w": 2,
+   "h": 1,
+   "color": "dark_red"
+  },
+  {
+   "x": 6,
+   "y": 10,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 0,
+   "y": 11,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 1,
+   "y": 11,
+   "w": 1,
+   "h": 2,
+   "color": "black"
+  },
+  {
+   "x": 2,
+   "y": 11,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 3,
+   "y": 11,
+   "w": 1,
+   "h": 1,
+   "color": "dark_red"
+  },
+  {
+   "x": 4,
+   "y": 11,
+   "w": 2,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 6,
+   "y": 11,
+   "w": 2,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 8,
+   "y": 11,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "w": 1,
+   "h": 4,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 0,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 2,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 3,
+   "y": 12,
+   "w": 1,
+   "h": 2,
+   "color": "black"
+  },
+  {
+   "x": 4,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 5,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 6,
+   "y": 12,
+   "w": 1,
+   "h": 2,
+   "color": "red"
+  },
+  {
+   "x": 7,
+   "y": 12,
+   "w": 1,
+   "h": 2,
+   "color": "black"
+  },
+  {
+   "x": 8,
+   "y": 12,
+   "w": 2,
+   "h": 4,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 12,
+   "y": 12,
+   "w": 2,
+   "h": 3,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 0,
+   "y": 13,
+   "w": 1,
+   "h": 3,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 1,
+   "y": 13,
+   "w": 1,
+   "h": 3,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 2,
+   "y": 13,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 4,
+   "y": 13,
+   "w": 1,
+   "h": 1,
+   "color": "black"
+  },
+  {
+   "x": 5,
+   "y": 13,
+   "w": 1,
+   "h": 2,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 2,
+   "y": 14,
+   "w": 2,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 4,
+   "y": 14,
+   "w": 1,
+   "h": 2,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 6,
+   "y": 14,
+   "w": 1,
+   "h": 2,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 7,
+   "y": 14,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 14,
+   "y": 14,
+   "w": 2,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 2,
+   "y": 15,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 3,
+   "y": 15,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 5,
+   "y": 15,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 7,
+   "y": 15,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 11,
+   "y": 15,
+   "w": 4,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 15,
+   "y": 15,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  }
+ ],
+ "notes": "synthetic (ml/render_synthetic.py seed=1239); corners in pixel-edge coords"
+}

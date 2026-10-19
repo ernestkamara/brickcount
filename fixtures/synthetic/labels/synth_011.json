@@ -1,0 +1,686 @@
+{
+ "image": "synth_011.jpg",
+ "grid": {
+  "cols": 16,
+  "rows": 16
+ },
+ "corners": [
+  [
+   310.6,
+   737.12
+  ],
+  [
+   1444.9,
+   761.16
+  ],
+  [
+   1398.44,
+   1823.67
+  ],
+  [
+   336.34,
+   1869.22
+  ]
+ ],
+ "pieces": [
+  {
+   "x": 0,
+   "y": 12,
+   "w": 4,
+   "h": 4,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 4,
+   "y": 14,
+   "w": 10,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 14,
+   "y": 14,
+   "w": 2,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 4,
+   "y": 12,
+   "w": 1,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 13,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 7,
+   "y": 13,
+   "w": 4,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 11,
+   "y": 12,
+   "w": 1,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 12,
+   "y": 13,
+   "w": 4,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 12,
+   "w": 6,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 12,
+   "y": 12,
+   "w": 2,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 14,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 15,
+   "y": 9,
+   "w": 1,
+   "h": 4,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 0,
+   "y": 11,
+   "w": 4,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 4,
+   "y": 8,
+   "w": 1,
+   "h": 4,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 11,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 6,
+   "y": 10,
+   "w": 1,
+   "h": 2,
+   "color": "blue"
+  },
+  {
+   "x": 7,
+   "y": 11,
+   "w": 2,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 9,
+   "y": 11,
+   "w": 2,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "w": 2,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 13,
+   "y": 10,
+   "w": 1,
+   "h": 2,
+   "color": "blue"
+  },
+  {
+   "x": 14,
+   "y": 11,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "w": 1,
+   "h": 4,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 1,
+   "y": 1,
+   "w": 2,
+   "h": 10,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 3,
+   "y": 1,
+   "w": 1,
+   "h": 10,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 9,
+   "w": 1,
+   "h": 2,
+   "color": "blue"
+  },
+  {
+   "x": 7,
+   "y": 10,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 8,
+   "y": 10,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 9,
+   "y": 10,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 10,
+   "y": 10,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 12,
+   "y": 9,
+   "w": 1,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 14,
+   "y": 10,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 6,
+   "y": 9,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 7,
+   "y": 9,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 8,
+   "y": 9,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 9,
+   "y": 8,
+   "w": 2,
+   "h": 2,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 13,
+   "y": 8,
+   "w": 1,
+   "h": 2,
+   "color": "blue"
+  },
+  {
+   "x": 14,
+   "y": 9,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 5,
+   "y": 8,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 6,
+   "y": 8,
+   "w": 2,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 8,
+   "y": 8,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "w": 1,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 12,
+   "y": 5,
+   "w": 1,
+   "h": 4,
+   "color": "blue"
+  },
+  {
+   "x": 14,
+   "y": 8,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 4,
+   "y": 5,
+   "w": 1,
+   "h": 3,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 6,
+   "w": 1,
+   "h": 2,
+   "color": "blue"
+  },
+  {
+   "x": 6,
+   "y": 7,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 7,
+   "y": 5,
+   "w": 1,
+   "h": 3,
+   "color": "blue"
+  },
+  {
+   "x": 8,
+   "y": 7,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 9,
+   "y": 7,
+   "w": 2,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 11,
+   "y": 7,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 13,
+   "y": 7,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 14,
+   "y": 6,
+   "w": 1,
+   "h": 2,
+   "color": "blue"
+  },
+  {
+   "x": 15,
+   "y": 0,
+   "w": 1,
+   "h": 8,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 0,
+   "y": 4,
+   "w": 1,
+   "h": 3,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 6,
+   "y": 6,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 8,
+   "y": 6,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 9,
+   "y": 6,
+   "w": 2,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 11,
+   "y": 6,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 13,
+   "y": 6,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 5,
+   "y": 5,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 9,
+   "y": 5,
+   "w": 2,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 11,
+   "y": 5,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 13,
+   "y": 5,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 4,
+   "y": 1,
+   "w": 1,
+   "h": 4,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 3,
+   "w": 1,
+   "h": 2,
+   "color": "blue"
+  },
+  {
+   "x": 6,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 7,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 8,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 9,
+   "y": 4,
+   "w": 2,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 11,
+   "y": 4,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 12,
+   "y": 4,
+   "w": 2,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 14,
+   "y": 3,
+   "w": 1,
+   "h": 2,
+   "color": "blue"
+  },
+  {
+   "x": 0,
+   "y": 0,
+   "w": 1,
+   "h": 4,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 6,
+   "y": 3,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 7,
+   "y": 3,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 8,
+   "y": 3,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "w": 2,
+   "h": 1,
+   "color": "light_bluish_gray"
+  },
+  {
+   "x": 11,
+   "y": 3,
+   "w": 1,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 12,
+   "y": 3,
+   "w": 2,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 2,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 6,
+   "y": 2,
+   "w": 2,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 8,
+   "y": 1,
+   "w": 1,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 9,
+   "y": 2,
+   "w": 2,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 11,
+   "y": 2,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 12,
+   "y": 2,
+   "w": 2,
+   "h": 1,
+   "color": "blue"
+  },
+  {
+   "x": 14,
+   "y": 0,
+   "w": 1,
+   "h": 3,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "w": 3,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 9,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 13,
+   "y": 0,
+   "w": 1,
+   "h": 2,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 1,
+   "y": 0,
+   "w": 4,
+   "h": 1,
+   "color": "reddish_brown"
+  },
+  {
+   "x": 8,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "color": "reddish_brown"
+  }
+ ],
+ "notes": "synthetic (ml/render_synthetic.py seed=1245); corners in pixel-edge coords"
+}
