@@ -1,0 +1,11 @@
+name: Idea or feature request
+description: Suggest better line detection or other improvements.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What is your idea?
+      description: Explain the problem first, then your suggestion.
+    validations:
+      required: true

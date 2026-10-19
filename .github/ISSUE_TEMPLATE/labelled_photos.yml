@@ -1,0 +1,21 @@
+name: Offer labelled photos
+description: Share photos of flat LEGO mosaics to improve accuracy.
+labels: [data]
+body:
+  - type: markdown
+    attributes:
+      value: Read the "Add labelled photos" section in CONTRIBUTING.md first. Only share photos you took or have the right to share.
+  - type: textarea
+    id: photos
+    attributes:
+      label: About the photos
+      description: How many photos, grid size, lighting, glass or glare, framing.
+    validations:
+      required: true
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Rights
+      options:
+        - label: I took these photos, or I have the right to share them, and I removed location metadata.
+          required: true

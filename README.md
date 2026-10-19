@@ -47,3 +47,7 @@ This is early and accuracy is below target. Run `npm run eval` for the current n
 - The fixture labels are hand-made and may contain mistakes.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to help.
+
+## License
+
+[MIT](LICENSE). Contributions are welcome, see [CONTRIBUTING.md](CONTRIBUTING.md).
