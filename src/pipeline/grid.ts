@@ -19,6 +19,8 @@ export const MIN_STUDS = 8;
 export const MAX_STUDS = 48;
 /** Below this grid confidence the scan reports grid_failed instead of guessing. */
 export const GRID_MIN_CONFIDENCE = 0.55;
+/** On a side cut by the photo, a frame line must be this much stronger than a typical seam/stud edge. */
+export const FRAME_LINE_STRENGTH = 2.5;
 /** Edge cell must be at least this fraction visible (stud centre visible) to count. */
 export const EDGE_VISIBLE = 0.5;
 
@@ -163,6 +165,7 @@ export function axisPeriod(p: Float64Array, inner: [number, number], nFixed?: nu
   const { T, peak } = findPeriod(p, ia, ib, tMin, tMax);
   return { T, peak, phase: findPhase(p, ia, ib, T) };
 }
+
 
 /**
  * Stud evidence of every lattice strip along one axis. For x strips [o+kT, o+(k+1)T) (or the
@@ -470,8 +473,20 @@ export function fitGrid(src: RgbaImage, quad: Quad, opts: FitGridOptions = {}): 
     const pr1 = gradientProfiles(g1, W1, H1, { x0: m1, x1: W1 - m1, y0: m1, y1: H1 - m1 });
     const innerX: [number, number] = [m1, W1 - m1];
     const innerY: [number, number] = [m1, H1 - m1];
-    const ax = axisPeriod(pr1.px, innerX, opts.gridOverride?.cols, expect?.cols);
-    const ay = axisPeriod(pr1.py, innerY, opts.gridOverride?.rows, expect?.rows);
+    let ax = axisPeriod(pr1.px, innerX, opts.gridOverride?.cols, expect?.cols);
+    let ay = axisPeriod(pr1.py, innerY, opts.gridOverride?.rows, expect?.rows);
+    // Studs are square and the coarse warp keeps the quad's aspect: periods differing by ~2x
+    // mean one axis locked onto a harmonic; re-search the longer one near the shorter.
+    if (!opts.gridOverride && !expect) {
+      const redo = (p: Float64Array, inner: [number, number], T: number): AxisPeriod => {
+        const sp = inner[1] - inner[0];
+        const ia = Math.round(inner[0] + sp * 0.04), ib = Math.round(inner[1] - sp * 0.04);
+        const r = findPeriod(p, ia, ib, T * 0.9, T * 1.1);
+        return { T: r.T, peak: r.peak, phase: findPhase(p, ia, ib, r.T) };
+      };
+      if (ay.T > ax.T * 1.6) ay = redo(pr1.py, innerY, ax.T);
+      else if (ax.T > ay.T * 1.6) ax = redo(pr1.px, innerX, ay.T);
+    }
     const matRgb = sampleMat(w1.img, innerX, innerY, Math.round(m1 * 0.6));
     // Phase: the fundamental peaks either on cell boundaries or on stud centres depending on
     // lighting; pick the lattice whose cell centres sit on stud outlines.
@@ -500,17 +515,40 @@ export function fitGrid(src: RgbaImage, quad: Quad, opts: FitGridOptions = {}): 
     let ambiguousEdges = 0;
     if (doTrim && !opts.gridOverride) {
       const trim = (f: RunResult, p: Float64Array, T: number, tag: string, ce: { k0: number; per: number[] }, o: number) => {
-        const lo = frameEdge(p, f.start - 0.4 * T, f.start + 0.9 * T);
+        // Where the photo ends along this axis (centre line); a side cut by the photo border may
+        // show no frame line at all, in which case the border itself bounds the cell.
+        const isX = tag === 'X';
+        const len = isX ? W1 : H1;
+        const at = (u: number) => (isX ? Math.round(H1 / 2) * W1 + u : u * W1 + Math.round(W1 / 2));
+        let vLo0 = 0, vHi0 = len - 1;
+        while (vLo0 < len - 1 && !valid[at(vLo0)]) vLo0++;
+        while (vHi0 > 0 && !valid[at(vHi0)]) vHi0--;
         const hiB = f.start + f.n * T;
-        const hi = frameEdge(p, hiB - 0.9 * T, hiB + 0.4 * T);
-        const vLo = (f.start + T - lo) / T, vHi = (hi - (hiB - T)) / T;
+        const sums: number[] = [];
+        for (let x = Math.round(f.start + T); x < Math.round(hiB - T); x++) sums.push(p[x - 1] + p[x] + p[x + 1]);
+        const lineRef = median(sums) || 1e-9;
+        const edgeAt = (a: number, b: number, fallback: number, cut: boolean) => {
+          const e = frameEdge(p, cut ? Math.max(a, vLo0 + 2) : a, cut ? Math.min(b, vHi0 - 2) : b);
+          if (!cut || e < 0) return e < 0 ? fallback : e;
+          const strength = p[e - 1] + p[e] + p[e + 1];
+          return strength >= FRAME_LINE_STRENGTH * lineRef ? e : fallback;
+        };
+        const lo = edgeAt(f.start - 0.4 * T, f.start + 0.9 * T, vLo0, f.truncated[0]);
+        const hi = edgeAt(hiB - 0.9 * T, hiB + 0.4 * T, vHi0, f.truncated[1]);
+        const vLo = Math.min(1.5, (f.start + T - lo) / T), vHi = Math.min(1.5, (hi - (hiB - T)) / T);
         const i0 = Math.round((f.start - o) / T) - ce.k0;
         const ref = median(ce.per.slice(i0 + 2, i0 + f.n - 2)) || 1e-9;
         const cLo = (ce.per[i0] ?? 0) / ref, cHi = (ce.per[i0 + f.n - 1] ?? 0) / ref;
-        const drop = (v: number, c: number) => (v < EDGE_VISIBLE && c < 1) || (v < 0.6 && c < 0.62);
-        const ambiguous = (v: number, c: number) => v > 0.4 && v < 0.65 && c > 0.45 && c < 1.1;
+        // a cell "mostly hidden" by the frame-edge cue but with a clear stud at its centre means
+        // the edge cue latched onto a seam: trust the centre evidence then
+        const drop = (v: number, c: number) =>
+          (v < EDGE_VISIBLE && c < 0.9 && !(v < 0.3 && c > 0.6)) || (v < 0.6 && c < 0.62);
+        // uncertainty of a keep/drop call: in the overlap band of both cues, or cues that
+        // contradict each other (frame edge says hidden, centre says stud)
+        const ambiguous = (v: number, c: number) =>
+          (v < 0.3 && c > 0.6 ? 2 : 0) + (v > 0.4 && v < 0.65 && c > 0.45 && c < 1.1 ? 1 : 0);
         debug[tagP + 'vis' + tag] = `${vLo.toFixed(2)}/${cLo.toFixed(2)} ${vHi.toFixed(2)}/${cHi.toFixed(2)}`;
-        ambiguousEdges += +ambiguous(vLo, cLo) + +ambiguous(vHi, cHi);
+        ambiguousEdges += ambiguous(vLo, cLo) + ambiguous(vHi, cHi);
         const dLo = drop(vLo, cLo) && f.n > MIN_STUDS, dHi = drop(vHi, cHi) && f.n > MIN_STUDS;
         if (dLo) { f.start += T; f.n -= 1; }
         if (dHi) f.n -= 1;
@@ -601,7 +639,8 @@ export function fitGrid(src: RgbaImage, quad: Quad, opts: FitGridOptions = {}): 
   const quadAspect = Math.abs(Math.log((cols / rows) / (qw / qh)));
   // (4) edge evidence: each non-cut side must step clearly from studs to not-studs
   const contrasts = [...fx.edgeContrast, ...fy.edgeContrast].filter((v) => !Number.isNaN(v));
-  const minEdge = contrasts.length ? Math.min(...contrasts) : 0;
+  // sides cut by the photo border have no outside to compare with: the border is the boundary
+  const minEdge = contrasts.length ? Math.min(...contrasts) : 1;
   const cutSides = [...fx.truncated, ...fy.truncated].filter(Boolean).length;
   const openSides = [...fx.openEnded, ...fy.openEnded].filter(Boolean).length;
   const inRange = cols >= MIN_STUDS && cols <= MAX_STUDS && rows >= MIN_STUDS && rows <= MAX_STUDS;
@@ -615,7 +654,7 @@ export function fitGrid(src: RgbaImage, quad: Quad, opts: FitGridOptions = {}): 
   penal(minEdge < 0.3, minEdge < 0.15 ? 0.5 : 0.85, `weak edge ${minEdge.toFixed(2)}`);
   penal(cutSides >= 2, 0.85, `${cutSides} sides cut by photo`);
   penal(!refined, 0.85, 'keystone refinement rejected');
-  penal(ambiguousEdges > 0, Math.pow(0.92, ambiguousEdges), `${ambiguousEdges} half-visible edge rows/cols`);
+  penal(ambiguousEdges > 0, Math.pow(0.85, ambiguousEdges), `edge visibility uncertain (${ambiguousEdges})`);
   if (!inRange) { confidence = 0; reasons.push('size out of range'); }
   debug.peak = +peak.toFixed(2);
   debug.drift = +drift.toFixed(2);

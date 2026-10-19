@@ -4,6 +4,7 @@ import { loadOpenCvNode as loadOpenCv } from './cvNode';
 import { detectQuad } from '../../src/pipeline/preprocess';
 import { regroup, runPipeline } from '../../src/pipeline/run';
 import { demoLayout, renderMosaic } from './synth';
+import type { Quad } from '../../src/pipeline/types';
 
 let cv: CV;
 beforeAll(async () => {
@@ -35,6 +36,28 @@ describe('runPipeline (OpenCV.js) on a synthetic photo', () => {
     const pairs = r.pairs!.map((p) => (p.col === p0.x && p.row === p0.y && p.dir === 'h' ? { ...p, seam: true, manual: true } : p));
     const g = regroup(r.cells!, r.grid!, pairs);
     expect(g.pieceCount).toBe(r.pieceCount + 1);
+  });
+
+  it('re-scan with user corners slightly outside the mosaic succeeds', async () => {
+    const cx = img.width / 2, cy = img.height / 2;
+    const loose = corners.map(([x, y]) => [cx + (x - cx) * 1.05, cy + (y - cy) * 1.05]) as Quad;
+    const r = await runPipeline(cv, img, { classifier: 'heuristic', countBaseplate: true, corners: loose });
+    expect(r.status).toBe('ok');
+    expect(r.grid).toMatchObject({ cols: 16, rows: 16 });
+  });
+
+  it('re-scan with user corners at the photo corners of a tightly cropped photo succeeds', async () => {
+    const pad = 8;
+    const x0 = Math.round(Math.min(...corners.map((c) => c[0]))) - pad, y0 = Math.round(Math.min(...corners.map((c) => c[1]))) - pad;
+    const x1 = Math.round(Math.max(...corners.map((c) => c[0]))) + pad, y1 = Math.round(Math.max(...corners.map((c) => c[1]))) + pad;
+    const w = x1 - x0, h = y1 - y0;
+    const data = new Uint8ClampedArray(w * h * 4);
+    for (let y = 0; y < h; y++) data.set(img.data.subarray(((y0 + y) * img.width + x0) * 4, ((y0 + y) * img.width + x0 + w) * 4), y * w * 4);
+    const r = await runPipeline(cv, { width: w, height: h, data }, {
+      classifier: 'heuristic', countBaseplate: true, corners: [[0, 0], [w - 1, 0], [w - 1, h - 1], [0, h - 1]],
+    });
+    expect(r.status).toBe('ok');
+    expect(r.grid).toMatchObject({ cols: 16, rows: 16 });
   });
 
   it('returns grid_failed for a blank photo', async () => {

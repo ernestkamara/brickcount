@@ -53,6 +53,31 @@ describe('fitGrid on a synthetic stud grid', () => {
     expect(fit.grid.rows).toBe(14);
   });
 
+  it('user corners slightly outside the mosaic (on the mat) still give the right grid', () => {
+    const P = 40;
+    const { img, corners } = renderMosaic({ cols: 16, rows: 16, pitch: P, pieces: demoLayout(16, 16), seed: 11 });
+    const cx = img.width / 2, cy = img.height / 2;
+    const loose = corners.map(([x, y]) => [cx + (x - cx) * 1.06, cy + (y - cy) * 1.06]) as Quad;
+    const fit = fitGrid(img, loose);
+    expect(fit.ok).toBe(true);
+    expect([fit.grid.cols, fit.grid.rows]).toEqual([16, 16]);
+    fit.grid.corners.forEach(([x, y], i) => expect(Math.hypot(x - corners[i][0], y - corners[i][1])).toBeLessThan(P * 0.2));
+  });
+
+  it('tight crop: user corners at the photo corners, mosaic filling the frame', () => {
+    const P = 40;
+    const { img, corners } = renderMosaic({ cols: 16, rows: 16, pitch: P, pieces: demoLayout(16, 16), margin: 120, seed: 13 });
+    // crop to the mosaic plus ~1% of mat
+    const pad = Math.round(16 * P * 0.01);
+    const x0 = Math.round(corners[0][0]) - pad, y0 = Math.round(corners[0][1]) - pad;
+    const w = 16 * P + 2 * pad, h = 16 * P + 2 * pad;
+    const data = new Uint8ClampedArray(w * h * 4);
+    for (let y = 0; y < h; y++) data.set(img.data.subarray(((y0 + y) * img.width + x0) * 4, ((y0 + y) * img.width + x0 + w) * 4), y * w * 4);
+    const fit = fitGrid({ width: w, height: h, data }, [[0, 0], [w - 1, 0], [w - 1, h - 1], [0, h - 1]]);
+    expect(fit.ok).toBe(true);
+    expect([fit.grid.cols, fit.grid.rows]).toEqual([16, 16]);
+  });
+
   it('honours gridOverride', () => {
     const { img, corners } = renderMosaic({ cols: 10, rows: 10, pitch: 40, pieces: demoLayout(10, 10) });
     const fit = fitGrid(img, corners as Quad, { gridOverride: { cols: 10, rows: 10 } });

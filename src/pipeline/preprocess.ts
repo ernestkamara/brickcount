@@ -94,7 +94,10 @@ export function detectQuad(cv: CV, img: RgbaImage, maxSide = DEFAULT_DETECT_SIDE
       // but background/frame regions touch 3+ sides (or two adjacent ones) and are rejected.
       const tL = r.x <= border, tT = r.y <= border, tR = r.x + r.width >= W - border, tB = r.y + r.height >= H - border;
       const nTouch = +tL + +tT + +tR + +tB;
-      if (nTouch >= 3 || (tL && tT) || (tT && tR) || (tR && tB) || (tB && tL)) continue;
+      // A tightly cropped photo is (almost) all mosaic: allow 3-4 sides when the region fills
+      // most of the frame (frame bars and backgrounds never do).
+      const fillsFrame = area > W * H * 0.55 && r.width > W * 0.8 && r.height > H * 0.8;
+      if (!fillsFrame && (nTouch >= 3 || (tL && tT) || (tT && tR) || (tR && tB) || (tB && tL))) continue;
       const aspect = Math.min(r.width, r.height) / Math.max(r.width, r.height);
       if (aspect < 0.4) continue;
       const fill = area / (r.width * r.height);
