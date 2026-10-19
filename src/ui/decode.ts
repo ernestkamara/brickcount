@@ -1,6 +1,6 @@
 import { heicToJpeg, isHeic } from '../lib/heic';
 
-export const MAX_SIDE = 1600;
+export const MAX_SIDE = 4096;
 
 export function fitSize(w: number, h: number, max = MAX_SIDE): { width: number; height: number } {
   const s = Math.min(1, max / Math.max(w, h));

@@ -14,8 +14,11 @@ export interface GridSize {
 export interface Grid extends GridSize {
   /** Corners in the (downscaled) source image. */
   corners: Quad;
-  /** Side length of the rectified square image, px. */
+  /** Width of the rectified image, px (= cols * pitch). */
   warpedSize: number;
+  /** Rectified image width/height, px (cells are square: cols*pitch x rows*pitch). Optional for older consumers; default warpedSize. */
+  warpedWidth?: number;
+  warpedHeight?: number;
   /** Stud pitch in rectified px (warpedSize / cols). */
   pitch: number;
   /** 0..1 confidence that the grid fit is right. */
