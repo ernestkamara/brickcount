@@ -32,3 +32,16 @@ ml/data/
 ml/.venv/
 __pycache__/
 eval-report*.json
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+serviceAccount*.json
+*-firebase-adminsdk-*.json
+.firebase/
+.runtimeconfig.json
+functions/.secret.local
