@@ -1,0 +1,388 @@
+{
+ "image": "03_flower.jpg",
+ "grid": {
+  "cols": 15,
+  "rows": 16
+ },
+ "pieces": [
+  {
+   "x": 0,
+   "y": 0,
+   "w": 1,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 1,
+   "y": 0,
+   "w": 3,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 4,
+   "y": 0,
+   "w": 6,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 10,
+   "y": 0,
+   "w": 3,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 13,
+   "y": 0,
+   "w": 2,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 4,
+   "y": 1,
+   "w": 6,
+   "h": 2,
+   "color": "red"
+  },
+  {
+   "x": 0,
+   "y": 2,
+   "w": 2,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 2,
+   "y": 2,
+   "w": 2,
+   "h": 2,
+   "color": "red"
+  },
+  {
+   "x": 10,
+   "y": 2,
+   "w": 2,
+   "h": 2,
+   "color": "red"
+  },
+  {
+   "x": 12,
+   "y": 2,
+   "w": 3,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 4,
+   "y": 3,
+   "w": 6,
+   "h": 1,
+   "color": "yellow"
+  },
+  {
+   "x": 0,
+   "y": 4,
+   "w": 1,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "w": 2,
+   "h": 2,
+   "color": "red"
+  },
+  {
+   "x": 3,
+   "y": 4,
+   "w": 2,
+   "h": 2,
+   "color": "yellow"
+  },
+  {
+   "x": 5,
+   "y": 4,
+   "w": 1,
+   "h": 2,
+   "color": "black"
+  },
+  {
+   "x": 6,
+   "y": 4,
+   "w": 2,
+   "h": 2,
+   "color": "yellow"
+  },
+  {
+   "x": 8,
+   "y": 4,
+   "w": 1,
+   "h": 2,
+   "color": "black"
+  },
+  {
+   "x": 9,
+   "y": 4,
+   "w": 2,
+   "h": 2,
+   "color": "yellow"
+  },
+  {
+   "x": 11,
+   "y": 4,
+   "w": 2,
+   "h": 2,
+   "color": "red"
+  },
+  {
+   "x": 13,
+   "y": 4,
+   "w": 2,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 0,
+   "y": 6,
+   "w": 2,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 2,
+   "y": 6,
+   "w": 2,
+   "h": 2,
+   "color": "red"
+  },
+  {
+   "x": 4,
+   "y": 6,
+   "w": 6,
+   "h": 1,
+   "color": "yellow"
+  },
+  {
+   "x": 10,
+   "y": 6,
+   "w": 2,
+   "h": 2,
+   "color": "red"
+  },
+  {
+   "x": 12,
+   "y": 6,
+   "w": 3,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 4,
+   "y": 7,
+   "w": 6,
+   "h": 2,
+   "color": "red"
+  },
+  {
+   "x": 0,
+   "y": 8,
+   "w": 3,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 3,
+   "y": 8,
+   "w": 1,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 10,
+   "y": 8,
+   "w": 1,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "w": 4,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 0,
+   "y": 9,
+   "w": 1,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 1,
+   "y": 9,
+   "w": 2,
+   "h": 3,
+   "color": "medium_azure"
+  },
+  {
+   "x": 3,
+   "y": 9,
+   "w": 3,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 6,
+   "y": 9,
+   "w": 2,
+   "h": 4,
+   "color": "green"
+  },
+  {
+   "x": 8,
+   "y": 9,
+   "w": 3,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "w": 2,
+   "h": 3,
+   "color": "medium_azure"
+  },
+  {
+   "x": 13,
+   "y": 9,
+   "w": 2,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 0,
+   "y": 10,
+   "w": 1,
+   "h": 3,
+   "color": "medium_azure"
+  },
+  {
+   "x": 3,
+   "y": 10,
+   "w": 1,
+   "h": 2,
+   "color": "green"
+  },
+  {
+   "x": 4,
+   "y": 10,
+   "w": 2,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 8,
+   "y": 10,
+   "w": 2,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 10,
+   "y": 10,
+   "w": 1,
+   "h": 2,
+   "color": "green"
+  },
+  {
+   "x": 13,
+   "y": 10,
+   "w": 2,
+   "h": 3,
+   "color": "medium_azure"
+  },
+  {
+   "x": 4,
+   "y": 11,
+   "w": 2,
+   "h": 2,
+   "color": "green"
+  },
+  {
+   "x": 8,
+   "y": 11,
+   "w": 2,
+   "h": 2,
+   "color": "green"
+  },
+  {
+   "x": 1,
+   "y": 12,
+   "w": 3,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 10,
+   "y": 12,
+   "w": 3,
+   "h": 2,
+   "color": "medium_azure"
+  },
+  {
+   "x": 0,
+   "y": 13,
+   "w": 1,
+   "h": 3,
+   "color": "medium_azure"
+  },
+  {
+   "x": 4,
+   "y": 13,
+   "w": 2,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 6,
+   "y": 13,
+   "w": 2,
+   "h": 1,
+   "color": "green"
+  },
+  {
+   "x": 8,
+   "y": 13,
+   "w": 2,
+   "h": 1,
+   "color": "medium_azure"
+  },
+  {
+   "x": 13,
+   "y": 13,
+   "w": 2,
+   "h": 3,
+   "color": "medium_azure"
+  },
+  {
+   "x": 1,
+   "y": 14,
+   "w": 6,
+   "h": 2,
+   "color": "yellow"
+  },
+  {
+   "x": 7,
+   "y": 14,
+   "w": 6,
+   "h": 2,
+   "color": "yellow"
+  }
+ ],
+ "notes": "Close-up of the same mosaic; visible window identical to fixtures/labels/03_flower.json (offset 0,0), pieces copied."
+}
