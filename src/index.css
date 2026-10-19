@@ -135,7 +135,8 @@ main { max-width: 960px; margin: 0 auto; padding: 1rem; padding-bottom: max(2rem
 .corner-editor { display: grid; gap: 0.5rem; }
 .corner-svg { width: 100%; height: auto; display: block; touch-action: none; border-radius: 8px; background: #000; }
 .quad { fill: rgb(255 176 0 / 0.12); stroke: var(--amber); stroke-linejoin: round; }
-.handle { fill: rgb(255 255 255 / 0.85); stroke: var(--accent); cursor: grab; }
+.handle { fill: rgb(255 255 255 / 0.25); stroke: var(--accent); cursor: grab; }
+.handle-dot { fill: var(--accent); }
 .handle:focus-visible { outline: none; fill: var(--amber); }
 
 /* results */

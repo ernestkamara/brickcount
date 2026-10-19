@@ -17,6 +17,9 @@ export function CornerEditor({ url, width, height, initial, onSubmit, onCancel }
   const svg = useRef<SVGSVGElement>(null);
   const drag = useRef<number | null>(null);
   const r = Math.min(width, height) * 0.03;
+  // Pad the view by more than a handle radius so handles on the image edge (a tightly
+  // cropped photo puts the mosaic corners there) stay fully visible and grabbable.
+  const pad = r * 1.4;
 
   const toImage = (clientX: number, clientY: number): Point => {
     const ctm = svg.current!.getScreenCTM()!.inverse();
@@ -31,7 +34,7 @@ export function CornerEditor({ url, width, height, initial, onSubmit, onCancel }
       <svg
         ref={svg}
         className="corner-svg"
-        viewBox={`0 0 ${width} ${height}`}
+        viewBox={`${-pad} ${-pad} ${width + 2 * pad} ${height + 2 * pad}`}
         onPointerMove={(e) => {
           if (drag.current !== null) setCorner(drag.current, toImage(e.clientX, e.clientY));
         }}
@@ -40,6 +43,9 @@ export function CornerEditor({ url, width, height, initial, onSubmit, onCancel }
       >
         <image href={url} width={width} height={height} />
         <polygon className="quad" points={polygonPoints(q)} style={{ strokeWidth: r * 0.25 }} />
+        {q.map(([x, y], i) => (
+          <circle key={`dot${i}`} className="handle-dot" cx={x} cy={y} r={r * 0.18} pointerEvents="none" />
+        ))}
         {q.map(([x, y], i) => (
           <circle
             key={i}
