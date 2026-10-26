@@ -15,7 +15,7 @@
   "dependencies": {
     "@techstark/opencv-js": "^5.0.0-release.1",
     "comlink": "^4.4.2",
-    "firebase": "^13.0.0",
+    "firebase": "^13.1.0",
     "heic2any": "^0.0.4",
     "onnxruntime-web": "^1.30.0",
     "react": "^19.3.1",
